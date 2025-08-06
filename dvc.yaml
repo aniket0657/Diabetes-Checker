@@ -1,0 +1,38 @@
+stages:
+  data_ingestion:
+    cmd: python src/data/data_ingestion.py
+    deps:
+      - src/data/data_ingestion.py
+    params:
+      - data_ingestion.test_size
+    outs:
+      - data/processed
+  data_preprocessing:
+    cmd: python src/data/data_preprocessing.py
+    deps:
+      - data/processed
+      - src/data/data_preprocessing.py
+    outs:
+      - data/interim
+      - models/standardScalar.pkl
+
+
+
+  model_building:
+    cmd: python src/model/model_building.py
+    deps:
+       - data/interim
+       - src/model/model_building.py
+    outs:
+      - models/modelForPrediction.pkl
+
+  model_evaluation:
+    cmd: python src/model/model_evaluation.py
+    deps:
+      - models/modelForPrediction.pkl
+      - src/model/model_evaluation.py
+    metrics:
+      - reports/metrics.json
+    outs:
+      - reports/experiment_info.json
+

@@ -23,7 +23,7 @@ def save_split_data(X_train, X_test, y_train, y_test, save_dir):
     logging.info("Train-test split data saved.")
 
 def main():
-    df = load_data()
+    df = load_data("https://raw.githubusercontent.com/akashagalave/Dataset/refs/heads/main/diabetes%20(1).csv")
     df['BMI'] = df['BMI'].replace(0, df['BMI'].mean())
     df['BloodPressure'] = df['BloodPressure'].replace(0, df['BloodPressure'].mean())
     df['Glucose'] = df['Glucose'].replace(0, df['Glucose'].mean())
@@ -35,7 +35,7 @@ def main():
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
-    save_split_data(X_train, X_test, y_train, y_test, save_dir='./data')
+    save_split_data(X_train, X_test, y_train, y_test, save_dir='./data/processed')
 
 if __name__ == '__main__':
     main()
